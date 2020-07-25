@@ -1,16 +1,22 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: whoami 
+  labels:
+    app: whoami
+  name: whoami
+  namespace: default
 spec:
-  replicas: 1
+  selector:
+    matchLabels:
+      app: whoami
   template:
     metadata:
       labels:
-        app: whoami 
+        app: whoami
     spec:
       containers:
-        - name: whoami 
-          image: shipu.azurecr.io/whoami
-          ports:
-          - containerPort: 80
+      - image: shipu.azurecr.io/whoami
+        imagePullPolicy: Always
+        name: whoami
+        ports:
+         - containerPort: 80
